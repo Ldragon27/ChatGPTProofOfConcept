@@ -1,0 +1,23 @@
+﻿@page "/chatgpt"
+@using ChatGPTProofOfConcept.Data
+@using OpenAI.GPT3;
+@using OpenAI.GPT3.Managers;
+@using OpenAI.GPT3.ObjectModels;
+@using OpenAI.GPT3.ObjectModels.RequestModels;
+@using OpenAI.GPT3.Extensions;
+@inject IConfiguration _configuration
+
+<PageTitle>ChatGPT</PageTitle>
+<h1>ChatGPT</h1>
+
+<p>This component demonstrates fetching data from ChatGPT API. This is using GPT 3.5</p>
+<br>
+
+<p>Type in your query</p>
+
+<InputText @bind-Value=message.Input></InputText>
+
+@code {
+    private Message? message = new();
+
+}

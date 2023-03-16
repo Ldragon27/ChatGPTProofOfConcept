@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.4.33403.182
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChatGPTProofOfConcept", "ChatGPTProofOfConcept\ChatGPTProofOfConcept.csproj", "{BB4E33F6-2B7F-46EA-9CA3-D4EE046F5C03}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ChatGPTProofOfConcept", "ChatGPTProofOfConcept\ChatGPTProofOfConcept.csproj", "{BB4E33F6-2B7F-46EA-9CA3-D4EE046F5C03}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
