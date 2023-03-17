@@ -1,9 +1,64 @@
 ﻿@page "/"
+@using ChatGPTProofOfConcept.Data
+@using OpenAI.GPT3;
+@using OpenAI.GPT3.Managers;
+@using OpenAI.GPT3.ObjectModels;
+@using OpenAI.GPT3.ObjectModels.RequestModels;
+@using OpenAI.GPT3.Extensions;
+@inject IConfiguration _configuration
 
-<PageTitle>Index</PageTitle>
+<PageTitle>ChatGPT</PageTitle>
+<h1>ChatGPT</h1>
 
-<h1>Hello, world!</h1>
+<p>This component demonstrates fetching data from OpenAI API. This is using GPT 3.5</p>
+<br>
+<input class="form-control" type="text" @bind="message.Input" />
+<br>
+<button class="btn btn-primary" @onclick="CallService">Call the Service</button>
+<br>
+<p><b>Response:</b></p>
+<p>@message.Output</p>
 
-Welcome to your new app.
+@code {
+    private Message? message = new();
+    string Organization = "";
+    string ApiKey = "";
 
-<SurveyPrompt Title="How is Blazor working for you?" />
+    protected override void OnInitialized()
+    {
+        Organization = _configuration["OpenAIServiceOptions:Organization"] ?? "";
+        ApiKey = _configuration["OpenAIServiceOptions:ApiKey"] ?? "";
+    }
+
+    async Task CallService()
+    {
+        var openAiService = new OpenAIService(new OpenAiOptions()
+            {
+                ApiKey = ApiKey,
+                Organization = Organization
+            });
+        var completionResult =
+        await openAiService.Completions
+        .CreateCompletion(new CompletionCreateRequest()
+            {
+                Prompt = message.Input,
+                MaxTokens = 5
+            }, Models.ChatGpt3_5Turbo);
+        if (completionResult.Successful)
+        {
+            message.Output = completionResult
+            .Choices.FirstOrDefault()?.Text ?? "";
+        }
+        else
+        {
+            if (completionResult.Error == null)
+            {
+                message.Output = "Unknown Error";
+            }
+            message.Output =
+            $"{completionResult.Error?.Code}: {completionResult.Error?.Message}";
+        }
+    }
+
+
+}
