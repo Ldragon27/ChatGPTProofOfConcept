@@ -10,14 +10,37 @@
 <PageTitle>ChatGPT</PageTitle>
 <h1>ChatGPT</h1>
 
-<p>This component demonstrates fetching data from OpenAI API. This is using GPT 3.5</p>
+<div class="row">
+    <div class="col">
+        <h6>This component demonstrates fetching data from OpenAI API. This is using GPT 3.5</h6>
+        <br>
+        <br>
+    </div>
+</div>
+<div class="row">
+    <div class="col-6">
+        <div class="card">
+            <div class="card-body">
+                <InputTextArea class="form-control" type="text" placeholder="Start a converstation..." @bind-Value="message.Input"></InputTextArea>
+                <br>
+                <button class="btn btn-primary" @onclick="CallService">Submit</button>
+            </div>
+        </div>
+    </div>
+</div>
 <br>
-<input class="form-control" type="text" @bind="message.Input" />
+<div class="row"> </div>
 <br>
-<button class="btn btn-primary" @onclick="CallService">Call the Service</button>
-<br>
-<p><b>Response:</b></p>
-<p>@message.Output</p>
+<div class="row">
+    <div class="col-6">
+        <div class="card">
+            <h5 class="card-header">Response</h5>
+            <div class="card-body">
+                <p class="card-text">@message.Output</p>
+            </div>
+        </div>
+    </div>
+</div>
 
 @code {
     private Message? message = new();
