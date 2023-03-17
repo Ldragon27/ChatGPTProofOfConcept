@@ -60,11 +60,12 @@
                 ApiKey = ApiKey,
                 Organization = Organization
             });
+
         var completionResult =
-        await openAiService.Completions
-        .CreateCompletion(new CompletionCreateRequest()
+        await openAiService.ChatCompletion
+        .CreateCompletion(new ChatCompletionCreateRequest()
             {
-                Prompt = message.Input,
+                //Prompt = message.Input,
                 MaxTokens = 5
             }, Models.ChatGpt3_5Turbo);
         if (completionResult.Successful)
