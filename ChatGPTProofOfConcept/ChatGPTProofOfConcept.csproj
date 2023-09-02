@@ -7,8 +7,10 @@
     <UserSecretsId>52de54f9-8ebb-430e-afd1-574efba791d9</UserSecretsId>
   </PropertyGroup>
 
+  <PropertyGroup Condition=" '$(RunConfiguration)' == 'https' " />
+  <PropertyGroup Condition=" '$(RunConfiguration)' == 'http' " />
   <ItemGroup>
-    <PackageReference Include="Betalgo.OpenAI.GPT3" Version="6.8.0" />
+    <PackageReference Include="Betalgo.OpenAI.GPT3" Version="6.8.4" />
   </ItemGroup>
 
 </Project>
