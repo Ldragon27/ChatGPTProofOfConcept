@@ -2,10 +2,17 @@
     position: relative;
     display: flex;
     flex-direction: column;
+    background-color: #081f2c;
+}
+
+h5 {
+    color: black;
 }
 
 main {
     flex: 1;
+    color: white;
+    background-color: #161617;
 }
 
 .sidebar {
@@ -13,8 +20,7 @@ main {
 }
 
 .top-row {
-    background-color: #f7f7f7;
-    border-bottom: 1px solid #d6d5d5;
+    background-color: #07173c;
     justify-content: flex-end;
     height: 3.5rem;
     display: flex;
