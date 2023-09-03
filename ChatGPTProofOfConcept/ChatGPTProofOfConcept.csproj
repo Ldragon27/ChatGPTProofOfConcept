@@ -14,9 +14,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Remove="Pages\whisper\" />
+    <None Remove="Pages\dalle\" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Pages\whisper\" />
+    <Folder Include="Pages\dalle\" />
   </ItemGroup>
 </Project>
