@@ -1,4 +1,4 @@
-﻿@page "/whisper"
+﻿@page "/dalle"
 @using ChatGPTProofOfConcept.Data
 @using OpenAI.GPT3;
 @using OpenAI.GPT3.Managers;
@@ -7,12 +7,12 @@
 @using OpenAI.GPT3.Extensions;
 @inject IConfiguration _configuration
 
-<PageTitle>Whisper Demo</PageTitle>
-<h1>Whisper Demo</h1>
+<PageTitle>Dall-E Demo</PageTitle>
+<h1>Dall-E Demo</h1>
 
 <div class="row">
     <div class="col">
-        <h6>This component demonstrates Whisper from OpenAI API</h6>
+        <h6>This component demonstrates Dall-E from the OpenAI API</h6>
         <br>
         <br>
     </div>
@@ -21,7 +21,7 @@
     <div class="col-6">
         <div class="card">
             <div class="card-body">
-                <InputTextArea class="form-control" type="text" placeholder="Start a converstation..." @bind-Value="message.Input"></InputTextArea>
+                <InputTextArea class="form-control" type="text" placeholder="A dog on the moon..." @bind-Value="message.Input"></InputTextArea>
                 <br>
                 <button class="btn btn-primary" @onclick="CallService">Submit</button>
             </div>
@@ -37,15 +37,18 @@
             <h5 class="card-header">Response</h5>
             <div class="card-body">
                 <p class="card-text">@message.Output</p>
+                <p>@((MarkupString)ImageResponse)</p>
             </div>
         </div>
     </div>
 </div>
+<br>
 
 @code {
     private Message? message = new();
     string Organization = "";
     string ApiKey = "";
+    string ImageResponse = "";
 
     protected override void OnInitialized()
     {
@@ -56,32 +59,37 @@
     async Task CallService()
     {
         var openAiService = new OpenAIService(new OpenAiOptions()
-            {
-                ApiKey = ApiKey,
-                Organization = Organization
-            });
-        var completionResult =
-        await openAiService.Completions
-        .CreateCompletion(new CompletionCreateRequest()
-            {
-                Prompt = message.Input,
-                MaxTokens = 5
-            }, Models.ChatGpt3_5Turbo);
-        if (completionResult.Successful)
         {
-            message.Output = completionResult
-            .Choices.FirstOrDefault()?.Text ?? "";
+            ApiKey = ApiKey,
+            Organization = Organization
+        });
+
+        var imageResult =
+        await openAiService.Image
+        .CreateImage(new ImageCreateRequest
+        {
+            Prompt = message.Input,
+            N = 2,
+            Size = StaticValues.ImageStatics.Size.Size256,
+            ResponseFormat = StaticValues.ImageStatics.ResponseFormat.Url,
+            User = "TestUser"
+        });
+        if (imageResult.Successful)
+        {
+            message.Output = "";
+            foreach (var image in imageResult.Results)
+            {
+                ImageResponse += $@"<img src=""{image.Url}"" />&nbsp;&nbsp;";
+            }
         }
         else
         {
-            if (completionResult.Error == null)
+            if (imageResult.Error == null)
             {
                 message.Output = "Unknown Error";
             }
             message.Output =
-            $"{completionResult.Error?.Code}: {completionResult.Error?.Message}";
+        $"{imageResult.Error?.Code}: {imageResult.Error?.Message}";
         }
     }
-
-
 }
